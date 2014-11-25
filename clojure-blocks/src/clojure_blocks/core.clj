@@ -12,7 +12,7 @@
 (ns clojure-blocks.core
   (:gen-class)
   (:require [block-world.board :as board])
-  (:require [help.core])
+  (:require [clojure-blocks.help :as core.help])
   )
 
 
@@ -25,7 +25,7 @@
   (println "
            This block-world is written totally in clojure. Is made for your fun and educational porpouses.
 
-           Now, you can start the game with `(start)` and get the blocks world beign amazing.
+           Now, if this is your first time playing you can start the game with `(start)` and get the blocks world beign amazing.
 
            ")
   )
@@ -33,13 +33,13 @@
 ;;; Show the instructions for the game
 (defn instructions
   []
-  (help.core/instructions)
+  (core.help/instructions)
   )
 
 ;;; Asks for help in certain command
 (defn help
   [command]
-  (help.core/help command)
+  (core.help/help command)
   )
 
 ;;; Show the state of the board/game
@@ -50,7 +50,7 @@
 
 (defn commands
   []
-  (help.core/commands)
+  (core.help/commands)
   )
 
 ;;; Prints the welcome state for the game
@@ -59,10 +59,11 @@
   (println "Starting....
            ...
            ")
-  (help.core/instructions)
+  (core.help/instructions)
   (println "Everything ready, you can start with:")
   (commands)
   (println "This is the actual state of your current board")
+  (board/board-reset)
   (state)
   )
 

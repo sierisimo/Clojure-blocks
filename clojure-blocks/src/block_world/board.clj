@@ -37,3 +37,9 @@
            ")
   (doseq [keyval board-map] (println (key keyval) (val keyval)))
   )
+
+;;TODO: function reset-board launched by start should reset the board...
+(defn board-reset
+  "Reset the elements in the board."
+  []
+  )

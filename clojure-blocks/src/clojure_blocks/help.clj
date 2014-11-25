@@ -8,7 +8,7 @@
 ;;;;   Help functions as `instructions` and `help`
 ;;;;
 
-(ns help.core)
+(ns clojure-blocks.help)
 
 (defn instructions
   "Main Text to show at loading the game"
@@ -17,10 +17,16 @@
   (println "
            Hi, welcome to block-world, this set of instructions are writed for letting you get started with block-world in clojure.
 
+           The things that are suppossed to be writen by you at the REPL are noted by ``
+
            You can start with two of basic commands, probably you already know the first one:
            `(instructions)` which shows this text.
 
            The second one is `(help \"command\")` which will show you usage for a certain command.
+
+           The next is the result of runnign `(commands)` this command will show you a list of avalible commands. You can
+           write it at any time if you forgot something.
+
            ")
   )
 
@@ -36,8 +42,9 @@
            state        --Shows you the state of the board.
 
 
-           NOTE: REMEMBERE that you always have to use this commands in the form:
-             (command params)
+           NOTE:
+             REMEMBER!! that you always have to use this commands in the form:
+               (command params)
 
            ")
   )
@@ -47,7 +54,7 @@
   [command]
   (println "Command:")
   (case command
-    "instructions" (println "instructions
+    "instructions" (println "  instructions
 
                             Usage:
                               (instructions)
@@ -58,8 +65,9 @@
                             Synopsis:
                               instructions will show you just a basic text explaining how to get started with block-world.
                             ")
-    "help" (println "help
-                     Usage:
+    "help" (println "    help
+
+                    Usage:
                               (help \"command\")
 
                             Arguments:
@@ -70,6 +78,17 @@
 
                             Synopsis:
                               instructions will show you just a basic text explaining how to get started with block-world.
+                            ")
+    "start" (println "    start
+
+                     Usage:
+                              (start)
+
+                            Arguments:
+                              [This function takes no arguments]
+
+                            Synopsis:
+                              Let the play begin... also, if the game already started, it restarts the board.
                             ")
 
     (let []
