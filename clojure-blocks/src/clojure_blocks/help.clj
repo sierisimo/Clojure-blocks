@@ -44,8 +44,9 @@
 
            NOTE:
              REMEMBER!! that you always have to use this commands in the form:
-               (command params)
+               (command ...)
 
+             and you can check what can be '...' with (help \"command\")
            ")
   )
 
@@ -89,6 +90,28 @@
 
                             Synopsis:
                               Let the play begin... also, if the game already started, it restarts the board.
+                            ")
+    "commands" (println "    commands
+
+                     Usage:
+                              (commands)
+
+                            Arguments:
+                              [This function takes no arguments]
+
+                            Synopsis:
+                              This command will show you a list of avalible commands with a small explanation on what they do.
+                            ")
+    "state" (println "    commands
+
+                     Usage:
+                              (state)
+
+                            Arguments:
+                              [This function takes no arguments]
+
+                            Synopsis:
+                              This command will show you a list of avalible commands with a small explanation on what they do.
                             ")
 
     (let []

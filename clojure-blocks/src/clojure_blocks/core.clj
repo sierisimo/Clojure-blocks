@@ -31,27 +31,16 @@
   )
 
 ;;; Show the instructions for the game
-(defn instructions
-  []
-  (core.help/instructions)
-  )
+(defn instructions [] (core.help/instructions))
 
 ;;; Asks for help in certain command
-(defn help
-  [command]
-  (core.help/help command)
-  )
+(defn help [command] (core.help/help command))
 
 ;;; Show the state of the board/game
-(defn state
-  []
-  (board/board-state)
-  )
+(defn state [] (board/board-state))
 
-(defn commands
-  []
-  (core.help/commands)
-  )
+;;; Show avalible commands
+(defn commands [] (core.help/commands))
 
 ;;; Prints the welcome state for the game
 (defn start
@@ -68,4 +57,3 @@
   )
 
 (-main)
-
