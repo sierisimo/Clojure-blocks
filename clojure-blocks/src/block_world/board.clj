@@ -8,7 +8,10 @@
 ;;;;   Elements that represent the main board where the blocks are gonna be played
 ;;;;
 
-(ns block-world.board)
+(ns block-world.board
+  (:require [block-world.blocks :as blocks])
+  (:require [block-tools.utils :as block-utils])
+  )
 
 ;;; Make the size of the board avalible but read-only
 ;;(def ^{:const true}
@@ -16,18 +19,22 @@
 ;;(def ^{:const true}
 ;;  board-height 12)
 
+(defprotocol Board
+  (add [self block]
+       [self block-vector]
+  )
+  (move [self]
+        [self block]
+  )
+  (reset [self])
+  )
+
 (def board-map {:a [[] [] [] [] [] [] [] [] [] [] [] []]
                 :b [[] [] [] [] [] [] [] [] [] [] [] []]
                 :c [[] [] [] [] [] [] [] [] [] [] [] []]
                 :d [[] [] [] [] [] [] [] [] [] [] [] []]
                 :e [[] [] [] [] [] [] [] [] [] [] [] []]
                 })
-
-;;
-;;(defn init-world
-;;  []
-;;  (println "Creating a world for your blocks ;)")
-;;)
 
 (defn board-state
   "Prints out a nice view of the board"

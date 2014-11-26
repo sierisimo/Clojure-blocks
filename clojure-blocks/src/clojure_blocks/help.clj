@@ -24,22 +24,23 @@
 
            The second one is `(help \"command\")` which will show you usage for a certain command.
 
-           The next is the result of runnign `(commands)` this command will show you a list of avalible commands. You can
+           The next is the result of runnign `(commands)` this command will show you a list of avaliable commands. You can
            write it at any time if you forgot something.
 
            ")
   )
 
 (defn commands
-  "List of commands avalible at REPL time"
+  "List of commands avaliable at REPL time"
   []
-  (println "Avalible commands at REPL (Read Evaluate Print Loop) time:
+  (println "avaliable commands at REPL (Read Evaluate Print Loop) time:
 
            instructions --Show a small text on how to use block-world.
            help         --Asks for help on certain command.
            start        --Run the main instructions for letting you play.
            commands     --Shows this list.
            state        --Shows you the state of the board.
+           block-types  --Shows the set of avaliable types of blocks you can use
 
 
            NOTE:
@@ -53,11 +54,10 @@
 (defn help
   "You send a command and we show a lot of text about it ;)"
   [command]
-  (println "Command:")
   (case command
-    "instructions" (println "  instructions
+    "instructions" (println "Command:  instructions
 
-                            Usage:
+                    Usage:
                               (instructions)
 
                             Arguments:
@@ -66,21 +66,21 @@
                             Synopsis:
                               instructions will show you just a basic text explaining how to get started with block-world.
                             ")
-    "help" (println "    help
+    "help" (println "Command:  help
 
                     Usage:
                               (help \"command\")
 
                             Arguments:
                               [
-                               command --A string that is suppossed to be the name of an avalible command [for avalible commands
+                               command --A string that is suppossed to be the name of an avaliable command [for avaliable commands
                                          write `(commands)` ]
                               ]
 
                             Synopsis:
                               instructions will show you just a basic text explaining how to get started with block-world.
                             ")
-    "start" (println "    start
+    "start" (println "Command:  start
 
                      Usage:
                               (start)
@@ -91,7 +91,7 @@
                             Synopsis:
                               Let the play begin... also, if the game already started, it restarts the board.
                             ")
-    "commands" (println "    commands
+    "commands" (println "Command:  commands
 
                      Usage:
                               (commands)
@@ -100,9 +100,9 @@
                               [This function takes no arguments]
 
                             Synopsis:
-                              This command will show you a list of avalible commands with a small explanation on what they do.
+                              This command will show you a list of avaliable commands with a small explanation on what they do.
                             ")
-    "state" (println "    commands
+    "state" (println "Command:  state
 
                      Usage:
                               (state)
@@ -111,16 +111,25 @@
                               [This function takes no arguments]
 
                             Synopsis:
-                              This command will show you a list of avalible commands with a small explanation on what they do.
+                              This command will show you a list of avaliable commands with a small explanation on what they do.
+                            ")
+    "block-types" (println "Command:  block-types
+
+                     Usage:
+                              (block-types)
+
+                            Arguments:
+                              [This function takes no arguments]
+
+                            Synopsis:
+                              This command will show you a set of avaliable block types for create.
                             ")
 
     (let []
       (println "Error: " command " not found.
                You can write:
-                   (commands) --to see a full list of command avalible
+                   (commands) --to see a full list of command avaliable
                ")
       (help "help")
     ))
   )
-
-

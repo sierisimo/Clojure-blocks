@@ -13,6 +13,7 @@
   (:gen-class)
   (:require [block-world.board :as board])
   (:require [clojure-blocks.help :as core.help])
+  (:require [block-world.blocks :as blocks])
   )
 
 
@@ -42,6 +43,7 @@
 ;;; Show avalible commands
 (defn commands [] (core.help/commands))
 
+(defn block-types [] (println blocks/types))
 ;;; Prints the welcome state for the game
 (defn start
   []
