@@ -32,21 +32,29 @@
 ;;; object/structs, but it's dangerous because you know... the user is always stupid...
 ;;;
 
-(defrecord Cube [data])
-(defrecord Sphere [data])
-(defrecord Pyramid [daa])
+(defrecord Cube [c-name position-x position-y])
+(defrecord Sphere [c-name position-x position-y])
+(defrecord Pyramid [c-name position-x position-y])
 
 (defprotocol Block
   (move [self position])
-  (trash [self])
   )
 
 (extend-type Cube
   Block
-  (move [position] (println position))
-  (trash [_] (println "Sending to trash..."))
+  (move [self position-x position-y] (println "Not implemented")) ;TODO: Validate that his on top
   )
 
+(extend-type Sphere
+  Block
+  (move [self position] (println "Not implemented");;"I was at" (:position self) "but now i'm at:" position)
+        )
+  )
+
+(extend-type Pyramid
+  Block
+  (move [self position-x position-y] (println "Not implemented")) ;TODO: Validate that his on top
+  )
 
 ;; ^{:private true} is used for not letting the `require` get this function.
 (defn ^{:private true}

@@ -13,21 +13,25 @@
   (:require [block-tools.utils :as block-utils])
   )
 
-;;; Make the size of the board avalible but read-only
-;;(def ^{:const true}
-;;  board-width 5)
-;;(def ^{:const true}
-;;  board-height 12)
-
-(defprotocol Board
-  (add [self block]
-       [self block-vector]
-  )
-  (move [self]
-        [self block]
-  )
+(defprotocol Board-ops
+  (add [self blok])
+  (remv [self position-x position-y])
+  (remv-all [self position-x position-y])
   (reset [self])
   )
+
+(defrecord Board [bd-map]
+  Board-ops
+  (add [self blok]
+       (println blok))
+  (remv [self position-x position-y]
+        (println position-x))
+  (remv-all [self position-x position-y]
+        (println position-y))
+  (reset [self]
+         (println "Clear"))
+  )
+
 
 (def board-map {:a [[] [] [] [] [] [] [] [] [] [] [] []]
                 :b [[] [] [] [] [] [] [] [] [] [] [] []]
