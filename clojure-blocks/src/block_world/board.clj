@@ -9,9 +9,11 @@
 ;;;;
 
 (ns block-world.board
-  (:require [block-world.blocks :as blocks])
-  (:require [block-tools.utils :as block-utils])
-  (:import [block_world.blocks Cube])
+  (:require [block-world.blocks :as blocks]
+            [block-tools.utils :as block-utils])
+  (:import [block_world.blocks Cube]
+           [block_world.blocks Pyramid]
+           [block_world.blocks Sphere])
   )
 
 ;;; Private map that represents the board
@@ -46,11 +48,23 @@
   (add
    [self blok position-x position-y] ;The function need to recive a block, which line and what position
    (let [n-boad (when (not= (:block-name blok) :iblock)
-                  (println "Adding a new " (:block-name blok) "to this board")
-                  (println (instance? Cube blok))
-                  ;(def blok (move blok position-x position-y))
-                  (let [t-board self]
-                    (update-in t-board [:bd-map position-x (- position-y 1)] inc)
+                  (println "Trying to add a new" (:block-name blok) "to this board")
+                  (let [last-block ((position-x (:bd-data self)) (- position-y 1))]
+                    (if (instance? Pyramid last-block)
+                      (self)
+                      (if (instance? Sphere last-block)
+                        (self)
+                        (
+                         ;(def blok (move blok position-x position-y))
+                         (let [t-board self]
+                           ;(let [n-e (position-x (:bd-map t-board) (- position-y 1))] ;use (ref ... ) instead of whathever im doing in here...
+                           ;  (with-redefs n-e (conj n-e blok))
+                           ;  )
+                           (update-in t-board [:bd-map position-x (- position-y 1)] inc)
+                           )
+                         )
+                        )
+                      )
                     )
                   )]
      n-boad)
@@ -68,6 +82,15 @@
    [self]
    (println "..."))
   )
+
+(defn add-b
+  [board blok position-x position-y]
+  (if (instance? Board board)
+    (add board blok position-x position-y)
+    ()
+    )
+  )
+
 
 ;;; Returns a new Board object.
 (defn create-board
