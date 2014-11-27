@@ -40,8 +40,9 @@
            start        --Run the main instructions for letting you play.
            commands     --Shows this list.
            state        --Shows you the state of the board.
-           block-types  --Shows the set of avaliable types of blocks you can use
-
+           block-types  --Shows the set of avaliable types of blocks you can use.
+           create-block --Creates a new block based on a given Keyword.
+           add-block    --Adds a new block to the board.
 
            NOTE:
              REMEMBER!! that you always have to use this commands in the form:
@@ -124,6 +125,37 @@
                             Synopsis:
                               This command will show you a set of avaliable block types for create.
                             ")
+     "create-block" (println "Command:  create-block
+
+                     Usage:
+                              (create-block figure)
+
+                            Arguments:
+                              [
+                               figure --Can be one of the Keywords in `(block-types)` or of the next strings:
+                                       \"block\"   - Creates a :cube
+                                       \"pyramid\" - Creates a :pyramid
+                                       \"sphere\"  - Creates a sphere
+                              ]
+
+                            Synopsis:
+                              Returns a special object of the type you call.
+                            ")
+    "add-block" (println "Command:  add-block
+
+                     Usage:
+                              (add-block block position-x position-y)
+
+                            Arguments:
+                              [
+                               block      --A special object of block type. See `(help \"create-block\")` for more info.
+                               position-x --A keyword telling the position in board. Can be one of -> :a :b :c :d :e
+                               position-y --A number from 1 trougth 12
+                              ]
+
+                            Synopsis:
+                              Adds a block to the current board
+                         ")
 
     (let []
       (println "Error: " command " not found.

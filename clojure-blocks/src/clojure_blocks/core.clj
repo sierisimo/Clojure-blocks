@@ -11,9 +11,10 @@
 
 (ns clojure-blocks.core
   (:gen-class)
-  (:require [block-world.board :as board])
-  (:require [clojure-blocks.help :as core.help])
-  (:require [block-world.blocks :as blocks])
+  (:require [block-world.board :as board]
+            [clojure-blocks.help :as core.help]
+            [block-world.blocks :as blocks])
+  (:import [block_world.board Board])
   )
 
 
@@ -43,7 +44,21 @@
 ;;; Show avalible commands
 (defn commands [] (core.help/commands))
 
+;; Just print the names
 (defn block-types [] (println blocks/types))
+
+;; Wrapper function for cration of blocks
+(defn create-block [figure] (blocks/create-block figure))
+
+(def board)
+
+;; Wraper function for adding a block
+(defn add-block
+  "Adds a new block to the current board"
+  [blok p-x p-y]
+  (def board (add board blok p-x p-y))
+  )
+
 ;;; Prints the welcome state for the game
 (defn start
   []
@@ -54,8 +69,7 @@
   (println "Everything ready, you can start with:")
   (commands)
   (println "This is the actual state of your current board")
-  (board/board-reset)
-  (state)
+  (def board (board/create-board))
   )
 
 (-main)

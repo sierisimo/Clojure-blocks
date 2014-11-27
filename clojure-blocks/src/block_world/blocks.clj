@@ -12,7 +12,8 @@
 ;; Set of names, just names, not very important
 ;; Update: The original behaivor of this was to have a hash-map but (case ...) doesn't know how to look at
 ;; (get types :block) when value is `str` or clojure.lang.Symbol so... just let the stuff be a set.
-(def types #{:block :pyramid :sphere})
+(def types
+  #{:block :pyramid :sphere})
 
 ;;;At this point I tried to use `(deftype Block ...)` but it's 2 AM and I want to sleep a litle...
 ;;; so get I mad at the idea while reading a lot of java code at github
@@ -32,9 +33,9 @@
 ;;; object/structs, but it's dangerous because you know... the user is always stupid...
 ;;;
 
-(defrecord Cube [c-name position-x position-y])
-(defrecord Sphere [c-name position-x position-y])
-(defrecord Pyramid [c-name position-x position-y])
+(defrecord Cube [block-name position-x position-y])
+(defrecord Sphere [block-name position-x position-y])
+(defrecord Pyramid [block-name position-x position-y])
 
 (defprotocol Block
   (move [self position])
@@ -57,35 +58,35 @@
   )
 
 ;; ^{:private true} is used for not letting the `require` get this function.
-(defn ^{:private true}
-  c-block
-  []
+;;(defn ^{:private true}
+;;  c-block
+;;  []
   ;; I FUCKING HATE YOU (deftype ...) I REALLY FUCKING HATE YOU. YOU MAKE ME WASTE LIKE 3 HOURS OF USELESS CODE READING
-  (let [tblock {:name :block
-                :position nil
-                }]
-    tblock) ; TODO: Make the block object
-  )
+;;  (let [tblock {:name :block
+;;                :position nil
+;;                }]
+;;    tblock) ; TODO: Make the block object
+;;  )
 
-(defn ^{:private true}
-  p-block
-  []
+;;(defn ^{:private true}
+;;  p-block
+;;  []
   ;; SERIOUSLY, IT'S VERY STUPID HOW MANY DOCUMENTS DOES NOT EXIST ABOUT HOW TO USE THE DAMN (deftype ...)
-  (let [tblock {:name :pyramid
-                :position nil
-                }]
-    tblock) ; TODO: Make the block object
-  )
+;;  (let [tblock {:name :pyramid
+;;                :position nil
+;;                }]
+;;    tblock) ; TODO: Make the block object
+;;  )
 
-(defn ^{:private true}
-  s-block
-  []
+;;(defn ^{:private true}
+;;  s-block
+;;  []
   ;; EVEN STACKOVERFLOW HAS A VERY SMALL NUMBER OF ANSEWRS ABOUT IT!
-  (let [tblock {:name :sphere
-                :position nil
-                }]
-    tblock) ; TODO: Make the block object
-  )
+;;  (let [tblock {:name :sphere
+;;                :position nil
+;;                }]
+;;    tblock) ; TODO: Make the block object
+;;  )
 
 ;; This function creates all kind of blocks
 (defn create-block
@@ -95,10 +96,11 @@
   ;;
   (let [f-block
         (case figure
-          (:block 'block "block") (c-block)
-          (:pyramid 'pyramid "pyramid") (p-block)
-          (:sphere 'sphere "sphere") (s-block)
-          {:name :iblock
-           :position nil})]
+          (:block 'block "block") (Cube. :cube :z 0)
+          (:pyramid 'pyramid "pyramid") (Pyramid. :pyramid :z 0)
+          (:sphere 'sphere "sphere") (Sphere. :sphere :z 0)
+          {:block-name :iblock
+           :position-x -1
+           :position-y -1})]
     f-block)
   )
