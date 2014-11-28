@@ -26,7 +26,7 @@
              })
 
 (def ;^{:private true}
-  board-data {:a (ref [[] [] [] [] [] [] [] [] [] [] [] []])
+  board-data {:a (ref [[nil] [] [] [] [] [] [] [] [] [] [] []])
               :b (ref [[] [] [] [] [] [] [] [] [] [] [] []])
               :c (ref [[] [] [] [] [] [] [] [] [] [] [] []])
               :d (ref [[] [] [] [] [] [] [] [] [] [] [] []])
@@ -50,15 +50,18 @@
    (let [n-boad
          (when (not= (:block-name blok) :iblock)
            (println "Trying to add a new" (:block-name blok) "to this board")
-           (let [last-block ((position-x (:bd-data self)) (- position-y 1))]
-             ;(if (instance? Pyramid last-block)
-             ;  (self)
-             ;  (if (instance? Sphere last-block)
-             ;    (self)
-             (dosync
-              (alter (position-x (:bd-map self)) update-in [(- position-y 1)] inc)
-              (alter (position-x (:bd-data self)) update-in [(- position-y 1)] conj blok)
-              )
+           (let [last-block (last ((position-x (:bd-data self)) (- position-y 1)))]
+             (println last-block)
+             (if (instance? Pyramid last-block)
+               (println "You cannot add blocks over pyramids!")
+               (if (instance? Sphere last-block)
+                 (println "You can't add a" (:block-name last-block) " over a sphere, it doesn't have sense")
+                 (dosync
+                  (alter (position-x (:bd-map self)) update-in [(- position-y 1)] inc)
+                  (alter (position-x (:bd-data self)) update-in [(- position-y 1)] conj blok)
+                  )
+                 )
+               )
              )
            )]
      )
