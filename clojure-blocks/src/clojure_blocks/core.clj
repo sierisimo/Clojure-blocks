@@ -59,6 +59,12 @@
   (board/add-b board blok p-x p-y)
   )
 
+(defn remv-block
+  "Removes the block on top of position-x and position-y"
+  [p-x p-y]
+  (board/remv-b board p-x p-y)
+  )
+
 ;;; Prints the welcome state for the game
 (defn start
   []

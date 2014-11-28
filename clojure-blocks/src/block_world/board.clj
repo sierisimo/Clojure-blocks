@@ -26,7 +26,7 @@
              })
 
 (def ;^{:private true}
-  board-data {:a (ref [[nil] [] [] [] [] [] [] [] [] [] [] []])
+  board-data {:a (ref [[] [] [] [] [] [] [] [] [] [] [] []])
               :b (ref [[] [] [] [] [] [] [] [] [] [] [] []])
               :c (ref [[] [] [] [] [] [] [] [] [] [] [] []])
               :d (ref [[] [] [] [] [] [] [] [] [] [] [] []])
@@ -51,7 +51,6 @@
          (when (not= (:block-name blok) :iblock)
            (println "Trying to add a new" (:block-name blok) "to this board")
            (let [last-block (last ((position-x (:bd-data self)) (- position-y 1)))]
-             (println last-block)
              (if (instance? Pyramid last-block)
                (println "You cannot add blocks over pyramids!")
                (if (instance? Sphere last-block)
@@ -64,11 +63,20 @@
                )
              )
            )]
-     )
+     "Added!")
    )
   (remv
    [self position-x position-y]
-   (println position-x))
+   (let [blok (last ((position-x (:bd-data self)) (- position-y 1)))] ;blok is the last blok obtained in bd-data
+;     (dosync
+;      (alter (position-x ))  ;pop the last element
+
+;      (if (= (position-x (:bd-map self)) update-in [(- position-y 1)] 0)
+;       ()
+;       (alter (position-x (:bd-map self)) update-in [(- position-y 1)] inc)
+;      )
+     )
+   )
   (remv-all
    [self position-x position-y]
    (println position-y))
@@ -78,6 +86,8 @@
   (state
    [self]
    (println "..."))
+
+   ;;(str ...)
   )
 
 (defn add-b
@@ -88,6 +98,13 @@
     )
   )
 
+(defn remv-b
+  [board px py]
+  (if (instance? Board board)
+    (remv board px py)
+    ()
+    )
+  )
 
 ;;; Returns a new Board object.
 (defn create-board
