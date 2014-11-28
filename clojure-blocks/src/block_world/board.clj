@@ -18,19 +18,19 @@
 
 ;;; Private map that represents the board
 (def ;^{:private true}
-  board-map {:a [0 0 0 0 0 0 0 0 0 0 0 0]
-             :b [0 0 0 0 0 0 0 0 0 0 0 0];[[0] [0] [0] [0] [0] [0] [0] [0] [0] [0] [0] [0]]
-             :c [0 0 0 0 0 0 0 0 0 0 0 0];[[0] [0] [0] [0] [0] [0] [0] [0] [0] [0] [0] [0]]
-             :d [0 0 0 0 0 0 0 0 0 0 0 0];[[0] [0] [0] [0] [0] [0] [0] [0] [0] [0] [0] [0]]
-             :e [0 0 0 0 0 0 0 0 0 0 0 0];[[0] [0] [0] [0] [0] [0] [0] [0] [0] [0] [0] [0]]
+  board-map {:a (ref [0 0 0 0 0 0 0 0 0 0 0 0])
+             :b (ref [0 0 0 0 0 0 0 0 0 0 0 0])
+             :c (ref [0 0 0 0 0 0 0 0 0 0 0 0])
+             :d (ref [0 0 0 0 0 0 0 0 0 0 0 0])
+             :e (ref [0 0 0 0 0 0 0 0 0 0 0 0])
              })
 
 (def ;^{:private true}
-  board-data {:a [[] [] [] [] [] [] [] [] [] [] [] []]
-              :b [[] [] [] [] [] [] [] [] [] [] [] []]
-              :c [[] [] [] [] [] [] [] [] [] [] [] []]
-              :d [[] [] [] [] [] [] [] [] [] [] [] []]
-              :e [[] [] [] [] [] [] [] [] [] [] [] []]
+  board-data {:a (ref [[] [] [] [] [] [] [] [] [] [] [] []])
+              :b (ref [[] [] [] [] [] [] [] [] [] [] [] []])
+              :c (ref [[] [] [] [] [] [] [] [] [] [] [] []])
+              :d (ref [[] [] [] [] [] [] [] [] [] [] [] []])
+              :e (ref [[] [] [] [] [] [] [] [] [] [] [] []])
               })
 
 ;;; Interface for opertions on a board
@@ -47,27 +47,21 @@
   Board-ops
   (add
    [self blok position-x position-y] ;The function need to recive a block, which line and what position
-   (let [n-boad (when (not= (:block-name blok) :iblock)
-                  (println "Trying to add a new" (:block-name blok) "to this board")
-                  (let [last-block ((position-x (:bd-data self)) (- position-y 1))]
-                    (if (instance? Pyramid last-block)
-                      (self)
-                      (if (instance? Sphere last-block)
-                        (self)
-                        (
-                         ;(def blok (move blok position-x position-y))
-                         (let [t-board self]
-                           ;(let [n-e (position-x (:bd-map t-board) (- position-y 1))] ;use (ref ... ) instead of whathever im doing in here...
-                           ;  (with-redefs n-e (conj n-e blok))
-                           ;  )
-                           (update-in t-board [:bd-map position-x (- position-y 1)] inc)
-                           )
-                         )
-                        )
-                      )
-                    )
-                  )]
-     n-boad)
+   (let [n-boad
+         (when (not= (:block-name blok) :iblock)
+           (println "Trying to add a new" (:block-name blok) "to this board")
+           (let [last-block ((position-x (:bd-data self)) (- position-y 1))]
+             ;(if (instance? Pyramid last-block)
+             ;  (self)
+             ;  (if (instance? Sphere last-block)
+             ;    (self)
+             (dosync
+              (alter (position-x (:bd-map self)) update-in [(- position-y 1)] inc)
+              (alter (position-x (:bd-data self)) update-in [(- position-y 1)] conj blok)
+              )
+             )
+           )]
+     )
    )
   (remv
    [self position-x position-y]

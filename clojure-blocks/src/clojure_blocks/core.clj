@@ -56,7 +56,7 @@
 (defn add-block
   "Adds a new block to the current board"
   [blok p-x p-y]
-  (def board (board/add-b board blok p-x p-y))
+  (board/add-b board blok p-x p-y)
   )
 
 ;;; Prints the welcome state for the game
