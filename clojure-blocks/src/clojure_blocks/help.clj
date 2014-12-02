@@ -43,6 +43,8 @@
            block-types  --Shows the set of avaliable types of blocks you can use.
            create-block --Creates a new block based on a given Keyword.
            add-block    --Adds a new block to the board.
+           remv-block   --Removes the top block from a the given position
+           remv-all-in  --Removes all the block in given position
 
            NOTE:
              REMEMBER!! that you always have to use this commands in the form:
@@ -155,6 +157,34 @@
 
                             Synopsis:
                               Adds a block to the current board
+                         ")
+    "remv-block" (println "Command:  remv-block
+
+                     Usage:
+                              (remv-block position-x position-y)
+
+                            Arguments:
+                              [
+                               position-x --A keyword telling the position in board. Can be one of -> :a :b :c :d :e
+                               position-y --A number from 1 trougth 12
+                              ]
+
+                            Synopsis:
+                              Removes the top block in the given position.
+                         ")
+    "remv-all-in" (println "Command:  remv-all-in
+
+                     Usage:
+                              (remv-all-in position-x position-y)
+
+                            Arguments:
+                              [
+                               position-x --A keyword telling the position in board. Can be one of -> :a :b :c :d :e
+                               position-y --A number from 1 trougth 12
+                              ]
+
+                            Synopsis:
+                              Throws all the blocks in the given position to /dev/null ;) ;)
                          ")
 
     (let []

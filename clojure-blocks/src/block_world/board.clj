@@ -36,6 +36,7 @@
 ;;; Interface for opertions on a board
 (defprotocol Board-ops
   (add [self blok position-x position-y])
+  (move [self numb origin-x origin-y dest-x dest-y])
   (remv [self position-x position-y])
   (remv-all [self position-x position-y])
   (reset [self])
@@ -65,6 +66,10 @@
              )
            )]
      )
+   )
+  (move
+   [self numb origin-x origin-y dest-x dest-y]
+   (println "Not implemented")
    )
   (remv
    [self position-x position-y]
