@@ -38,9 +38,6 @@
 ;;; Asks for help in certain command
 (defn help [command] (core.help/help command))
 
-;;; Show the state of the board/game
-(defn state [] (board/board-state))
-
 ;;; Show avalible commands
 (defn commands [] (core.help/commands))
 
@@ -51,6 +48,9 @@
 (defn create-block [figure] (blocks/create-block figure))
 
 (def board)
+
+;;; Show the state of the board/game
+(defn state [] (board/state board))
 
 ;; Wraper function for adding a block
 (defn add-block

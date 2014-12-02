@@ -36,7 +36,7 @@
 ;;; Interface for opertions on a board
 (defprotocol Board-ops
   (add [self blok position-x position-y])
-  (move [self numb origin-x origin-y dest-x dest-y])
+  (move-block [self origin-x origin-y dest-x dest-y])
   (remv [self position-x position-y])
   (remv-all [self position-x position-y])
   (reset [self])
@@ -67,8 +67,8 @@
            )]
      )
    )
-  (move
-   [self numb origin-x origin-y dest-x dest-y]
+  (move-block
+   [self origin-x origin-y dest-x dest-y]
    (println "Not implemented")
    )
   (remv
@@ -77,6 +77,7 @@
      (if (= (count (vect (- position-y 1))) 0)
        (println "The position doesn't have any blocks")
        (dosync
+        (def last-block (:block-name (last ((position-x (:bd-data self)) (- position-y 1)))))
         (println "The block" (:block-name (last ((position-x (:bd-data self)) (- position-y 1)))) "was removed and trowed to hell")
         (alter vect assoc (- position-y 1) ;Just replace the vector with the new vector poped
                (pop (vect (- position-y 1))) ; Literal, pop the last block
@@ -104,12 +105,15 @@
   (reset
    [self]
    (loop [x 1]
-     (when (< x 13)
-       (remv-all self :a x)
-       (remv-all self :b x)
-       (remv-all self :c x)
-       (remv-all self :d x)
-       (remv-all self :e x)
+     (when (< x 13) ;TODO: Change the next lines to (doseq [y (keys self)]) or similar
+       (doseq [y (keys (:bd-map self))]
+         (remv-all self y x)
+         )
+;       (remv-all self :a x)
+;       (remv-all self :b x)
+;       (remv-all self :c x)
+;       (remv-all self :d x)
+;       (remv-all self :e x)
        (recur (+ x 1))
        )
      )
@@ -117,9 +121,27 @@
 
   (state
    [self]
-   (println "..."))
-
-  ;;(str ...)
+   (println "Number of blocks in each line.
+            ")
+   (doseq [[k v] (map identity (:bd-map self))]
+     (println
+      k @v)
+     )
+   (println "
+            Type of blocks in order (from bottom to top)
+            ")
+   (doseq [[k v] (map identity (:bd-data self))]
+     (print k "[")
+     (doseq [l @v]
+       (print "[")
+       (doseq [m l]
+         (print (:block-name m))
+         )
+       (print "]")
+       )
+     (print "]\n")
+     )
+  "")
   )
 
 (defn add-b
@@ -143,13 +165,4 @@
   "Create a board with default status"
   []
   (Board. board-map board-data)
-  )
-
-(defn board-state
-  "Prints out a nice view of the board"
-  [bord]
-  (println "Board size is 5 x 12
-           You can add elements giving a letter and a position starting at 1.
-           ")
-  (doseq [keyval board-map] (println (key keyval) (val keyval)))
   )
