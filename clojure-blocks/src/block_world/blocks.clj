@@ -33,35 +33,35 @@
 ;;; object/structs, but it's dangerous because you know... the user is always stupid...
 ;;;
 
-(defrecord Cube [block-name position-x position-y])
-(defrecord Sphere [block-name position-x position-y])
-(defrecord Pyramid [block-name position-x position-y])
+(defrecord Cube [block-name])
+(defrecord Sphere [block-name])
+(defrecord Pyramid [block-name])
 
 (defprotocol Block
-  (move [self position])
+  ;(move [self position])
   )
 
-(extend-type Cube
-  Block
-  (move [self position-x position-y] (println "Not implemented")) ;TODO: Validate that his on top
-  )
+;(extend-type Cube
+;  Block
+;(move [self position-x position-y] (println "Not implemented")) ;TODO: Validate that his on top
+;  )
 
-(extend-type Sphere
-  Block
-  (move [self position] (println "Not implemented");;"I was at" (:position self) "but now i'm at:" position)
-        )
-  )
+;(extend-type Sphere
+;  Block
+;(move [self position] (println "Not implemented");;"I was at" (:position self) "but now i'm at:" position)
+;      )
+;  )
 
-(extend-type Pyramid
-  Block
-  (move [self position-x position-y] (println "Not implemented")) ;TODO: Validate that his on top
-  )
+;(extend-type Pyramid
+;  Block
+;  (move [self position-x position-y] (println "Not implemented")) ;TODO: Validate that his on top
+;  )
 
 ;; ^{:private true} is used for not letting the `require` get this function.
 ;;(defn ^{:private true}
 ;;  c-block
 ;;  []
-  ;; I FUCKING HATE YOU (deftype ...) I REALLY FUCKING HATE YOU. YOU MAKE ME WASTE LIKE 3 HOURS OF USELESS CODE READING
+;; I FUCKING HATE YOU (deftype ...) I REALLY FUCKING HATE YOU. YOU MAKE ME WASTE LIKE 3 HOURS OF USELESS CODE READING
 ;;  (let [tblock {:name :block
 ;;                :position nil
 ;;                }]
@@ -71,7 +71,7 @@
 ;;(defn ^{:private true}
 ;;  p-block
 ;;  []
-  ;; SERIOUSLY, IT'S VERY STUPID HOW MANY DOCUMENTS DOES NOT EXIST ABOUT HOW TO USE THE DAMN (deftype ...)
+;; SERIOUSLY, IT'S VERY STUPID HOW MANY DOCUMENTS DOES NOT EXIST ABOUT HOW TO USE THE DAMN (deftype ...)
 ;;  (let [tblock {:name :pyramid
 ;;                :position nil
 ;;                }]
@@ -81,7 +81,7 @@
 ;;(defn ^{:private true}
 ;;  s-block
 ;;  []
-  ;; EVEN STACKOVERFLOW HAS A VERY SMALL NUMBER OF ANSEWRS ABOUT IT!
+;; EVEN STACKOVERFLOW HAS A VERY SMALL NUMBER OF ANSEWRS ABOUT IT!
 ;;  (let [tblock {:name :sphere
 ;;                :position nil
 ;;                }]
@@ -96,9 +96,9 @@
   ;;
   (let [f-block
         (case figure
-          (:block 'block "block") (Cube. :cube :z 0)
-          (:pyramid 'pyramid "pyramid") (Pyramid. :pyramid :z 0)
-          (:sphere 'sphere "sphere") (Sphere. :sphere :z 0)
+          (:block 'block "block") (Cube. :cube);:z 0)
+          (:pyramid 'pyramid "pyramid") (Pyramid. :pyramid); :z 0)
+          (:sphere 'sphere "sphere") (Sphere. :sphere); :z 0)
           {:block-name :iblock
            :position-x -1
            :position-y -1})]

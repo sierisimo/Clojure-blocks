@@ -58,23 +58,35 @@
                  (dosync
                   (alter (position-x (:bd-map self)) update-in [(- position-y 1)] inc)
                   (alter (position-x (:bd-data self)) update-in [(- position-y 1)] conj blok)
+                  (println "Added!")
                   )
                  )
                )
              )
            )]
-     "Added!")
+     )
    )
   (remv
    [self position-x position-y]
+   (let [vect (position-x (:bd-data self))]
+     (if (= (count (vect (- position-y 1))) 0)
+       (println "The position doesn't have any blocks")
+       (dosync
+        (alter vect assoc (- position-y 1) ;Just replace the vector with the new vector poped
+               (pop (vect (- position-y 1))) ; Literal, pop the last block
+               )
+        (println "The block was removed and trowed to hell")
+        )
+       )
+     )
    (let [blok (last ((position-x (:bd-data self)) (- position-y 1)))] ;blok is the last blok obtained in bd-data
-;     (dosync
-;      (alter (position-x ))  ;pop the last element
 
-;      (if (= (position-x (:bd-map self)) update-in [(- position-y 1)] 0)
-;       ()
-;       (alter (position-x (:bd-map self)) update-in [(- position-y 1)] inc)
-;      )
+     ;     (dosync
+     ;      (alter (position-x (:bd-data self)) pop)  ;pop the last element
+     ;      (if (= (position-x (:bd-map self)) update-in [(- position-y 1)] 0)
+     ;       ()
+     ;       (alter (position-x (:bd-map self)) update-in [(- position-y 1)] inc)
+     ;      )
      )
    )
   (remv-all
@@ -87,7 +99,7 @@
    [self]
    (println "..."))
 
-   ;;(str ...)
+  ;;(str ...)
   )
 
 (defn add-b
