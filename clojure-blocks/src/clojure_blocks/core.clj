@@ -71,6 +71,12 @@
   (board/remv-all board px py)
   )
 
+(defn reset
+  []
+  (board/reset board)
+  )
+
+
 ;;; Prints the welcome state for the game
 (defn start
   []

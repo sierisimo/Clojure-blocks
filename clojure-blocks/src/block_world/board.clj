@@ -90,7 +90,9 @@
    [self position-x position-y]
    (let [vect (position-x (:bd-data self))]
      (if (= (count (vect (- position-y 1))) 0)
-       (println "But... there isn't any blog at that position :/ are you sure you know what are you doing?")
+       (;println "But... there isn't any blog at that position :-/
+       ;         ...are you sure you know what are you doing?")
+        ); Removed the message for letting the reset function work with this.
        (dosync
         (alter vect assoc (- position-y 1) [])
         (alter (position-x (:bd-map self)) update-in [(- position-y 1)] (fn [args] 0))
@@ -101,7 +103,18 @@
    )
   (reset
    [self]
-   (assoc self :bd-map board-map :bd-data board-data))
+   (loop [x 1]
+     (when (< x 13)
+       (remv-all self :a x)
+       (remv-all self :b x)
+       (remv-all self :c x)
+       (remv-all self :d x)
+       (remv-all self :e x)
+       (recur (+ x 1))
+       )
+     )
+   )
+
   (state
    [self]
    (println "..."))
