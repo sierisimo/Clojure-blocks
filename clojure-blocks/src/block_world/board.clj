@@ -46,7 +46,7 @@
 ;;; General object/class of name Board.
 (defrecord Board [bd-map bd-data]
   Board-ops
-  (add
+  (add       ;; add should return something for knowing if it was succesful
    [self blok position-x position-y] ;The function need to recive a block, which line and what position
    (let [n-boad
          (when (not= (:block-name blok) :iblock)
@@ -69,7 +69,10 @@
    )
   (move-block
    [self origin-x origin-y dest-x dest-y]
-   (println "Not implemented")
+   (let [blok (remv self origin-x origin-y)]
+     (println "Move::" blok)
+     (add self blok dest-x dest-y)
+     )
    )
   (remv
    [self position-x position-y]
@@ -77,8 +80,8 @@
      (if (= (count (vect (- position-y 1))) 0)
        (println "The position doesn't have any blocks")
        (dosync
-        (def last-block (:block-name (last ((position-x (:bd-data self)) (- position-y 1)))))
-        (println "The block" (:block-name (last ((position-x (:bd-data self)) (- position-y 1)))) "was removed and trowed to hell")
+        (def last-block (last ((position-x (:bd-data self)) (- position-y 1))))
+        (println "The block" last-block "was removed and trowed to hell")
         (alter vect assoc (- position-y 1) ;Just replace the vector with the new vector poped
                (pop (vect (- position-y 1))) ; Literal, pop the last block
                )
@@ -86,7 +89,7 @@
         )
        )
      )
-   )
+   last-block)
   (remv-all
    [self position-x position-y]
    (let [vect (position-x (:bd-data self))]
@@ -105,7 +108,7 @@
   (reset
    [self]
    (loop [x 1]
-     (when (< x 13) ;TODO: Change the next lines to (doseq [y (keys self)]) or similar
+     (when (< x 13)
        (doseq [y (keys (:bd-map self))]
          (remv-all self y x)
          )

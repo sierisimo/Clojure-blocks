@@ -59,23 +59,32 @@
   (board/add-b board blok p-x p-y)
   )
 
+;; Wrapper function for removing a single block
 (defn remv-block
   "Removes the block on top of position-x and position-y"
   [p-x p-y]
   (board/remv-b board p-x p-y)
   )
 
+;; Wrapper function for removing all block in position
 (defn remv-all-in
   "Remove all the block on a position-x and position-y"
   [px py]
   (board/remv-all board px py)
   )
 
+;; Wrapper function to clean the board
 (defn reset
   []
   (board/reset board)
   )
 
+;; Wrapper function for moving block from one to another point
+(defn move-block
+  "Moves a block from origin-x origin-y to position-x position-y"
+  [ox oy px py]
+  (board/move-block board ox oy px py)
+  )
 
 ;;; Prints the welcome state for the game
 (defn start
