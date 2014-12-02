@@ -45,6 +45,7 @@
            add-block    --Adds a new block to the board.
            remv-block   --Removes the top block from a the given position
            remv-all-in  --Removes all the block in given position
+           reset        --Clean all the board (just that easy)
 
            NOTE:
              REMEMBER!! that you always have to use this commands in the form:
@@ -185,6 +186,17 @@
 
                             Synopsis:
                               Throws all the blocks in the given position to /dev/null ;) ;)
+                         ")
+    "reset" (println "Command:  reset
+
+                     Usage:
+                              (reset)
+
+                            Arguments:
+                              [This function takes no arguments]
+
+                            Synopsis:
+                              Throws all the blocks to the floor like a little boy making a scene.
                          ")
 
     (let []
