@@ -72,27 +72,28 @@
      (if (= (count (vect (- position-y 1))) 0)
        (println "The position doesn't have any blocks")
        (dosync
+        (println "The block" (:block-name (last ((position-x (:bd-data self)) (- position-y 1)))) "was removed and trowed to hell")
         (alter vect assoc (- position-y 1) ;Just replace the vector with the new vector poped
                (pop (vect (- position-y 1))) ; Literal, pop the last block
                )
         (alter (position-x (:bd-map self)) update-in [(- position-y 1)] dec)
-        (println "The block was removed and trowed to hell")
         )
        )
-     )
-   (let [blok (last ((position-x (:bd-data self)) (- position-y 1)))] ;blok is the last blok obtained in bd-data
-
-     ;     (dosync
-     ;      (alter (position-x (:bd-data self)) pop)  ;pop the last element
-     ;      (if (= (position-x (:bd-map self)) update-in [(- position-y 1)] 0)
-     ;       ()
-     ;       (alter (position-x (:bd-map self)) update-in [(- position-y 1)] inc)
-     ;      )
      )
    )
   (remv-all
    [self position-x position-y]
-   (println position-y))
+   (let [vect (position-x (:bd-data self))]
+     (if (= (count (vect (- position-y 1))) 0)
+       (println "But... there isn't any blog at that position :/ are you sure you know what are you doing?")
+       (dosync
+        (alter vect assoc (- position-y 1) [])
+        (alter (position-x (:bd-map self)) update-in [(- position-y 1)] (fn [args] 0))
+        (println "The position " position-x position-y " is clean now...")
+        )
+       )
+     )
+   )
   (reset
    [self]
    (assoc self :bd-map board-map :bd-data board-data))

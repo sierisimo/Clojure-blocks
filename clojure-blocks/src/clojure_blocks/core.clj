@@ -65,6 +65,12 @@
   (board/remv-b board p-x p-y)
   )
 
+(defn remv-all-in
+  "Remove all the block on a position-x and position-y"
+  [px py]
+  (board/remv-all board px py)
+  )
+
 ;;; Prints the welcome state for the game
 (defn start
   []
