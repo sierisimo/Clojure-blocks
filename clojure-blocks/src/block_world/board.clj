@@ -75,6 +75,7 @@
         (alter vect assoc (- position-y 1) ;Just replace the vector with the new vector poped
                (pop (vect (- position-y 1))) ; Literal, pop the last block
                )
+        (alter (position-x (:bd-map self)) update-in [(- position-y 1)] dec)
         (println "The block was removed and trowed to hell")
         )
        )
